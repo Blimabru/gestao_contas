@@ -51,7 +51,7 @@ export default {
 
     <Header />
 
-    <div class="min-h-[calc(100vh-210px)]">
+    <div class="container min-h-[calc(100vh-170px)]">
         <div class="settings-container">
             <h2 class="title">Configuração de Cor de Fundo</h2>
             <form @submit.prevent="saveSettings" class="form-container">
@@ -73,14 +73,28 @@ export default {
 </template>
 
 <style scoped>
+.container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    /* Centraliza o conteúdo horizontalmente */
+    flex-direction: column;
+    padding: 0 20px;
+    /* Adiciona espaçamento nas laterais */
+}
+
 .settings-container {
-    max-width: 45%;
-    margin: 40px auto;
+    width: 100%;
+    /* Faz com que a largura ocupe 100% em dispositivos pequenos */
+    max-width: 600px;
+    /* Limita a largura máxima */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     text-align: left;
+    margin-top: 20px;
 }
 
 .title {
@@ -177,16 +191,31 @@ export default {
 /* Responsividade */
 @media (max-width: 768px) {
     .settings-container {
+        width: 100%;
+        /* Usa 100% da largura disponível */
         padding: 15px;
-        margin: 20px;
+        margin: 10px 0;
     }
 
-    .btn-save {
-        padding: 10px 16px;
+    .title {
+        font-size: 1.5rem;
+        /* Ajusta o tamanho do título */
+    }
+
+    .form-group {
+        margin-bottom: 15px;
     }
 
     .input-color {
+        width: 80px;
+        /* Ajusta a largura do input */
         height: 36px;
+    }
+
+    .btn-save {
+        width: 100%;
+        /* Faz o botão ocupar toda a largura */
+        padding: 10px;
     }
 }
 </style>

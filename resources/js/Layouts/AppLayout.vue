@@ -29,6 +29,7 @@ defineProps({
 });
 
 const showingNavigationDropdown = ref(false);
+const showingMenu = ref(false); // Variável para controlar o estado do menu hamburger
 const currentPage = ref('searchCep');
 
 const changePage = (page) => {
@@ -49,31 +50,57 @@ const switchToTeam = (team) => {
 
     <Head :title="title" />
 
-    <div class=""> <!-- This ensures the content takes up the remaining space -->
+    <div class="">
       <!-- Navigation -->
       <nav class="bg-white border-b border-gray-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="flex justify-between items-center h-16">
-            <!-- Logo -->
-            <Link :href="route('dashboard')" class="flex items-center">
-            <ApplicationMark class="block h-9 w-auto" />
+          <div class="relative flex items-center h-16">
+
+            <!-- Logo maior para telas grandes -->
+            <Link :href="route('dashboard')" class="absolute left-0 flex items-center">
+            <img src="/images/logo/Logo-Horizontal.png" alt="Logo" class="hidden sm:block h-9 w-auto" />
             </Link>
 
-            <!-- Navigation Links -->
-            <div class="hidden sm:flex space-x-8">
+            <!-- Logo menor para telas pequenas -->
+            <Link :href="route('dashboard')" class="absolute left-0 flex items-center">
+            <img src="/images/logo/Logo.png" alt="Logo" class="block sm:hidden h-9 w-auto" />
+            </Link>
+
+            <!-- Menu Hamburger -->
+            <div class="sm:hidden ml-auto">
+              <button @click="showingMenu = !showingMenu" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Links -->
+            <div class="w-full flex justify-center space-x-8 hidden sm:flex">
               <button v-if="user.role !== 'user'" @click="changePage('searchCep')"
-                :class="['flex-1 min-w-[150px] text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2', currentPage === 'searchCep' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
+                :class="['min-w-[150px] text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2', currentPage === 'searchCep' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
                 Busca CEP
               </button>
 
               <button @click="changePage('finances')"
+<<<<<<< Updated upstream
                 :class="['flex-1 min-w-[150px] text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2', currentPage === 'finances' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
+<<<<<<< HEAD
                 Gestor de Contas
+=======
+                Gestão de Contas
+=======
+                :class="['min-w-[150px] text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2', currentPage === 'finances' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
+                Gestor de Contas
+>>>>>>> Stashed changes
+>>>>>>> Feature/Design
               </button>
             </div>
 
             <!-- User Dropdowns -->
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center space-x-4 hidden sm:flex">
+              <!-- Adicione 'hidden sm:flex' para esconder em telas pequenas -->
               <Dropdown v-if="$page.props.jetstream.hasTeamFeatures" align="right" width="60">
                 <template #trigger>
                   <button class="inline-flex items-center text-gray-500 hover:text-gray-700 focus:outline-none">
@@ -144,57 +171,34 @@ const switchToTeam = (team) => {
       </nav>
 
       <!-- Responsive Navigation -->
-      <div :class="{ 'block': showingNavigationDropdown, 'hidden': !showingNavigationDropdown }" class="sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-          <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">Dashboard
-          </ResponsiveNavLink>
-        </div>
-        <div class="pt-4 pb-1 border-t border-gray-200">
-          <div class="flex items-center px-4">
-            <div v-if="$page.props.jetstream.managesProfilePhotos" class="shrink-0 me-3">
-              <img class="h-10 w-10 rounded-full object-cover" :src="$page.props.auth.user.profile_photo_url"
-                :alt="$page.props.auth.user.name" />
-            </div>
-            <div>
-              <div class="font-medium text-base text-gray-800">{{ $page.props.auth.user.name }}</div>
-              <div class="font-medium text-sm text-gray-500">{{ $page.props.auth.user.email }}</div>
-            </div>
-          </div>
-          <div class="mt-3 space-y-1">
-            <ResponsiveNavLink :href="route('profile.show')" :active="route().current('profile.show')">Meu perfil
-            </ResponsiveNavLink>
-            <ResponsiveNavLink v-if="$page.props.jetstream.hasApiFeatures" :href="route('api-tokens.index')"
-              :active="route().current('api-tokens.index')">API Tokens</ResponsiveNavLink>
-            <form method="POST" @submit.prevent="logout">
-              <ResponsiveNavLink as="button">Sair</ResponsiveNavLink>
-            </form>
-            <template v-if="$page.props.jetstream.hasTeamFeatures">
-              <div class="border-t border-gray-200" />
-              <div class="block px-4 py-2 text-xs text-gray-400">Manage Team</div>
-              <ResponsiveNavLink :href="route('teams.show', $page.props.auth.user.current_team)"
-                :active="route().current('teams.show')">Team Settings</ResponsiveNavLink>
-              <ResponsiveNavLink v-if="$page.props.jetstream.canCreateTeams" :href="route('teams.create')"
-                :active="route().current('teams.create')">Create New Team</ResponsiveNavLink>
-              <div v-if="$page.props.auth.user.all_teams.length > 1" class="border-t border-gray-200">
-                <div class="block px-4 py-2 text-xs text-gray-400">Switch Teams</div>
-                <template v-for="team in $page.props.auth.user.all_teams" :key="team.id">
-                  <form @submit.prevent="switchToTeam(team)">
-                    <ResponsiveNavLink as="button">
-                      <div class="flex items-center">
-                        <svg v-if="team.id == $page.props.auth.user.current_team_id" class="me-2 h-5 w-5 text-green-400"
-                          xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                          stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <div>{{ team.name }}</div>
-                      </div>
-                    </ResponsiveNavLink>
-                  </form>
-                </template>
-              </div>
-            </template>
-          </div>
+      <div :class="{ 'block': showingMenu, 'hidden': !showingMenu }" class="sm:hidden">
+        <div class="hamburger pt-2 pb-3 space-y-1">
+
+          <Link
+            class="block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out"
+            :href="route('dashboard')" :active="route().current('dashboard')">Dashboard
+          </Link>
+
+          <button v-if="user.role !== 'user'" @click="changePage('searchCep')"
+            :class="['block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out', currentPage === 'searchCep' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
+            Busca CEP
+          </button>
+
+          <button @click="changePage('finances')"
+            :class="['block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out', currentPage === 'finances' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
+            Gestor de Contas
+          </button>
+
+          <Link
+            class="block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out"
+            :href="route('settings.index')" v-if="user.role === 'master'">Configurações
+          </Link>
+          <!-- <DropdownLink :href="route('profile.show')">Meu perfil</DropdownLink> -->
+          <form @submit.prevent="logout">
+            <DropdownLink
+              class="block w-full pl-0 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out"
+              as="button">Sair</DropdownLink>
+          </form>
         </div>
       </div>
 
