@@ -79,12 +79,12 @@ defineProps({
             <div v-if="isOpen" class="sm:hidden bg-white shadow-md">
                 <div class="px-4 py-2">
                     <template v-if="$page.props.auth.user">
-                        <Link :href="route('dashboard')" class="block text-gray-500 hover:text-gray-700 py-2">
+                        <Link :href="route('dashboard')" class="block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out border-b-2 border-blue-500">
                         Dashboard
                         </Link>
                     </template>
                     <template v-else>
-                        <Link :href="route('login')" class="block text-gray-500 hover:text-gray-700 py-2">
+                        <Link :href="route('login')" class="block w-full ps-3 pe-4 py-2 text-start text-sm font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-blue-800 focus:bg-indigo-100 focus:border-blue-500 hover:text-gray-400 transition duration-150 ease-in-out border-b-2 border-blue-500">
                         Log in
                         </Link>
                     </template>
