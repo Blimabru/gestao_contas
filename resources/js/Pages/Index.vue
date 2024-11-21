@@ -6,6 +6,7 @@ import Footer from '@/Components/Footer.vue';
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import ApplicationMark from '@/Components/ApplicationMark.vue';
+import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 
 const store = useStore();
 
@@ -29,7 +30,7 @@ defineProps({
 
 <template>
     <div :style="{ backgroundColor }" class="flex flex-col min-h-screen">
-        
+
         <Head title="Home" />
 
         <!-- Header Section -->
@@ -38,7 +39,7 @@ defineProps({
                 <nav class="flex justify-between items-center py-3">
                     <!-- Logo -->
                     <Link :href="route('dashboard')" class="flex items-center">
-                        <ApplicationMark class="block h-9 w-auto" />
+                    <ApplicationMark class="block h-9 w-auto" />
                     </Link>
 
                     <!-- Links  -->
@@ -46,13 +47,13 @@ defineProps({
                         <template v-if="$page.props.auth.user">
                             <Link :href="route('dashboard')"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2">
-                                Dashboard
+                            Dashboard
                             </Link>
                         </template>
                         <template v-else>
                             <Link :href="route('login')"
                                 class="text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2">
-                                Log in
+                            Log in
                             </Link>
                         </template>
                     </div>
@@ -60,8 +61,10 @@ defineProps({
                     <!-- Mobile Menu Button -->
                     <div class="sm:hidden">
                         <button @click="isOpen = !isOpen" class="text-gray-500 hover:text-gray-700 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
                             </svg>
                         </button>
                     </div>
@@ -73,12 +76,12 @@ defineProps({
                 <div class="px-4 py-2">
                     <template v-if="$page.props.auth.user">
                         <Link :href="route('dashboard')" class="block text-gray-500 hover:text-gray-700 py-2">
-                            Dashboard
+                        Dashboard
                         </Link>
                     </template>
                     <template v-else>
                         <Link :href="route('login')" class="block text-gray-500 hover:text-gray-700 py-2">
-                            Log in
+                        Log in
                         </Link>
                     </template>
                 </div>
@@ -89,8 +92,11 @@ defineProps({
         <main class="flex-1 py-12"> <!-- Garante que o conteúdo principal ocupe o restante do espaço -->
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white p-6 rounded-lg shadow-md text-center">
-                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Bem-vindo à Gestão de Contas</h1>
-                    <p class="text-lg text-gray-600">Para iniciar, faça seu login</p>
+                    <ApplicationLogo />
+                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Bem-vindo!</h1>
+                    <Link :href="route('login')" class="text-lg text-gray-600 hover:text-gray-800 hover:underline transition-all duration-2000">
+                    Para iniciar, faça seu login
+                    </Link>
                 </div>
             </div>
         </main>
