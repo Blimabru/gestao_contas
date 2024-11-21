@@ -1,66 +1,119 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistema de Gestão de Acessos e Configurações
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um sistema de gestão de usuários, controle de acesso, configurações dinâmicas e integração com APIs externas, desenvolvido como um monólito utilizando **Laravel**, **Inertia.js** e **Vue.js**. O sistema implementa funcionalidades como autenticação, controle de acesso com base em papéis de usuário, configuração global exclusiva para usuários Master e integração com APIs externas como ChatGPT ou Correios.
 
-## About Laravel
+## Funcionalidades Principais
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### A. Autenticação e Controle de Acesso (ACL)
+- **Níveis de Usuário:**
+  - **Master:** Controle total sobre o sistema, incluindo configurações globais.
+  - **Administrador:** Acesso total aos módulos, exceto configurações globais.
+  - **Usuário Comum:** Acesso apenas aos módulos de visualização e edição próprios.
+  
+- **Restrições de Página e Componentes:**
+  - Middleware Laravel utilizado para controlar o acesso às rotas com base no tipo de usuário.
+  - No frontend (Vue.js), componentes são ocultados de acordo com as permissões do usuário logado, como componentes de edição que só aparecem para administradores e usuários Master.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### B. Configuração Global Exclusiva para Usuário Master
+- **Configuração Global:**
+  - O usuário Master pode definir a cor de fundo da aplicação, que será aplicada globalmente a todos os usuários.
+  - A configuração é armazenada no banco de dados e aplicada dinamicamente no frontend usando Vue.js.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### C. Integração com API Externa
+  - **Correios:** Permite consultar o CEP inserido pelo usuário e obter informações de endereço.
 
-## Learning Laravel
+- **Autenticação e Restrição de Acesso:**
+  - Funcionalidades de integração com API restritas a usuários Master e Administrador, com autenticação segura via JWT e Sanctum.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### D. Funcionalidade de Contas a Pagar e Receber
+- **CRUD de Contas:**
+  - Campos: Descrição, Valor, Data de Vencimento, Status (Pendente, Pago, Atrasado) e Tipo (Pagar ou Receber).
+  
+- **Restrições de Visualização e Edição:**
+  - Usuários comuns podem ver e editar apenas as próprias contas.
+  - Administradores e usuários Master têm acesso completo a todas as contas, podendo filtrar, adicionar, editar e excluir registros.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Requisitos Técnicos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### A. Backend - Laravel
+- **Controle de Acesso:**
+  - O controle de acesso é implementado com políticas e middleware no Laravel, garantindo que cada usuário tenha acesso apenas ao que é permitido para seu nível.
+  
+- **API para Configuração Global:**
+  - Uma API foi criada para gerenciar a configuração global da cor de fundo, utilizando cache para melhorar a performance.
+  
+- **Integração com API Externa:**
+  - A integração com a API externa (ChatGPT ou Correios) é realizada de forma segura, com autenticação adequada e chaves de API armazenadas no arquivo `.env`.
 
-## Laravel Sponsors
+### B. Frontend - Vue.js
+- **Autenticação com JWT:**
+  - A autenticação é gerida com tokens JWT, que são enviados em cada requisição para garantir a segurança e identificar o usuário logado.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Configuração Global Dinâmica:**
+  - O Vuex é utilizado para armazenar a configuração global (cor de fundo) e aplicá-la dinamicamente em toda a aplicação.
 
-### Premium Partners
+- **Interface Intuitiva:**
+  - O sistema conta com um dashboard simples e responsivo, onde a barra de navegação é adaptada ao nível de acesso do usuário, exibindo os links e componentes correspondentes.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### C. Arquitetura do Sistema
+- O projeto foi desenvolvido como um **monólito** utilizando as tecnologias **Laravel**, **Inertia.js** e **Vue.js**:
+  - **Laravel** serve como o backend e a camada de controle de acesso (ACL).
+  - **Inertia.js** facilita a integração do backend com o frontend, permitindo que o Vue.js seja usado no frontend sem a necessidade de um API REST separada.
+  - **Vue.js** é responsável pela renderização do frontend e pela interatividade da aplicação, utilizando Vuex para gerenciar o estado da aplicação e manter a reatividade.
 
-## Contributing
+## Tecnologias Utilizadas
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Backend:** Laravel, com autenticação JWT e middleware de controle de acesso.
+- **Frontend:** Vue.js, Inertia.js, Vuex para gerenciamento de estado, integração com APIs externas e renderização dinâmica de componentes.
+- **Banco de Dados:** MySQL (ou outro banco de dados relacional).
+- **APIs:** Integração com API busca de endereços pelo CEP para funcionalidades externas.
+- **Segurança:** Autenticação via JWT, configuração segura de chaves de API no arquivo `.env`.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Instruções para Execução
 
-## Security Vulnerabilities
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/blimabru/gestao_contas.git
+   cd gestao_contas
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. **Instale as dependências:**
+   ```bash
+   composer install
+   npm install && npm run build
+   ```
 
-## License
+3. **Configure o ambiente:** Copie o arquivo .env.example para .env e configure as variáveis de ambiente, incluindo as chaves de API.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+4. **Execute as migrações do banco de dados:**
+   ```bash
+   php artisan migrate --seed
+   php artisan db:seed --class=FinanceSeeder
+   ```
+
+5. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   composer run dev
+   ```
+
+6. **Acesse a aplicação no navegador::** A aplicação estará disponível em http://localhost:8000
+
+## Contribuição
+
+### Se você deseja contribuir com melhorias para o projeto, siga estas etapas:
+
+1. Faça um fork deste repositório.
+2. Crie uma nova branch:
+   ```bash
+   git checkout -b feature/nova-feature
+   ```
+3. Realize as alterações e faça commit delas
+   ```bash
+   git commit -m 'Adiciona nova feature'
+   ```
+4. Faça push para a branch
+   ```bash
+   git push origin feature/nova-feature
+   ```
+5. Abra um pull request descrevendo suas alterações ❤️
