@@ -68,7 +68,7 @@ const switchToTeam = (team) => {
 
               <button @click="changePage('finances')"
                 :class="['flex-1 min-w-[150px] text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out py-2', currentPage === 'finances' ? 'border-b-2 border-blue-500 text-blue-500' : 'border-b-2 border-transparent']">
-                Gestão de Contas
+                Gestor de Contas
               </button>
             </div>
 

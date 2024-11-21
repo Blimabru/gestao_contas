@@ -1,7 +1,7 @@
 <template>
   <footer class="footer">
     <div class="footer-content">
-      <p>&copy; {{ currentYear }} Gestão de Contas. Todos os direitos reservados.</p>
+      <p>&copy; {{ currentYear }} Gestor de Contas. Todos os direitos reservados.</p>
       <div class="social-icons">
         <a href="https://facebook.com" target="_blank" aria-label="Facebook">
           <i class="fa-brands fa-facebook"></i>
