@@ -44,14 +44,13 @@ export default {
     },
 };
 </script>
-
 <template>
 
     <Head :title="'Configurações'" />
 
     <Header />
 
-    <div class="container min-h-[calc(100vh-170px)]">
+    <div class="container">
         <div class="settings-container">
             <h2 class="title">Configuração de Cor de Fundo</h2>
             <form @submit.prevent="saveSettings" class="form-container">
@@ -69,26 +68,25 @@ export default {
             </form>
         </div>
     </div>
+
     <Footer />
 </template>
 
 <style scoped>
+
 .container {
     display: flex;
-    width: 100%;
-    align-items: center;
     justify-content: center;
-    /* Centraliza o conteúdo horizontalmente */
-    flex-direction: column;
-    padding: 0 20px;
-    /* Adiciona espaçamento nas laterais */
+    height: calc(100vh - 190px);
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .settings-container {
-    width: 100%;
-    /* Faz com que a largura ocupe 100% em dispositivos pequenos */
+    width: 70%;
+    height: fit-content;
     max-width: 600px;
-    /* Limita a largura máxima */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
@@ -182,7 +180,6 @@ export default {
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
     }
@@ -192,14 +189,14 @@ export default {
 @media (max-width: 768px) {
     .settings-container {
         width: 100%;
-        /* Usa 100% da largura disponível */
+        max-width: 400px;
+        height: fit-content;
         padding: 15px;
         margin: 10px 0;
     }
 
     .title {
         font-size: 1.5rem;
-        /* Ajusta o tamanho do título */
     }
 
     .form-group {
@@ -208,13 +205,11 @@ export default {
 
     .input-color {
         width: 80px;
-        /* Ajusta a largura do input */
         height: 36px;
     }
 
     .btn-save {
         width: 100%;
-        /* Faz o botão ocupar toda a largura */
         padding: 10px;
     }
 }
