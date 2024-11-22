@@ -1,6 +1,6 @@
 # Sistema de Gestão de Acessos e Configurações
 
-Este é um sistema de gestão de usuários, controle de acesso, configurações dinâmicas e integração com APIs externas, desenvolvido como um monólito utilizando **Laravel**, **Inertia.js** e **Vue.js**. O sistema implementa funcionalidades como autenticação, controle de acesso com base em papéis de usuário, configuração global exclusiva para usuários Master e integração com APIs externas como ChatGPT ou Correios.
+Este é um sistema de gestão de usuários, controle de acesso, configurações dinâmicas e integração com APIs externas, desenvolvido como um monólito utilizando **Laravel**, **Inertia.js** e **Vue.js**. O sistema implementa funcionalidades como autenticação, controle de acesso com base em papéis de usuário, configuração global exclusiva para usuários Master e integração com APIs externas como Busca CEP dos Correios.
 
 ## Funcionalidades Principais
 
@@ -43,7 +43,7 @@ Este é um sistema de gestão de usuários, controle de acesso, configurações 
   - Uma API foi criada para gerenciar a configuração global da cor de fundo, utilizando cache para melhorar a performance.
   
 - **Integração com API Externa:**
-  - A integração com a API externa (ChatGPT ou Correios) é realizada de forma segura, com autenticação adequada e chaves de API armazenadas no arquivo `.env`.
+  - A integração com a API externa (Busca CEP dos Correios) é realizada de forma segura, com autenticação adequada e chaves de API armazenadas no arquivo ```.env```.
 
 ### B. Frontend - Vue.js
 - **Autenticação com JWT:**
@@ -67,53 +67,90 @@ Este é um sistema de gestão de usuários, controle de acesso, configurações 
 - **Frontend:** Vue.js, Inertia.js, Vuex para gerenciamento de estado, integração com APIs externas e renderização dinâmica de componentes.
 - **Banco de Dados:** MySQL (ou outro banco de dados relacional).
 - **APIs:** Integração com API busca de endereços pelo CEP para funcionalidades externas.
-- **Segurança:** Autenticação via JWT, configuração segura de chaves de API no arquivo `.env`.
+- **Segurança:** Autenticação via JWT, configuração segura de chaves de API no arquivo .env.
 
 
 ## Instruções para Execução
 
 1. **Clone o repositório:**
+   
    ```bash
    git clone https://github.com/blimabru/gestao_contas.git
    cd gestao_contas
    ```
 
-2. **Instale as dependências:**
+2. **Mude para a Branch de Desenvolvimento:**
+
+    ```bash
+    git checkout Development
+    ```
+
+3. **Instale as dependências:**
+   
    ```bash
    composer install
-   npm install && npm run build
+   npm install
+   npm run build
    ```
 
-3. **Configure o ambiente:** Copie o arquivo .env.example para .env e configure as variáveis de ambiente, incluindo as chaves de API.
+4. **Configure o ambiente:** Crie uma cópia do arquivo ```.env.example```, renomeie-a para ```.env``` e configure as variáveis de ambiente, incluindo as chaves de API.
 
-4. **Execute as migrações do banco de dados:**
+5. **Execute as migrações do banco de dados:**
+   
+   1. **Cria os acessos de usuário iniciais:** opcional
+
+      
+      ```bash
+      php artisan migrate --seed
+      ```
+
+      **Esse comando cria 3 usuários de teste** com os seguintes logins e senhas:
+
+      - **Login:** master@master.com (senha: master@master.com)
+      - **Login:** admin@admin.com (senha: admin@admin.com)
+      - **Login:** user@user.com (senha: user@user.com)
+  
+  
+     2. **Popula o banco de dados com 10 contas financeiras fictícias utilizando:** opcional
+   
+        
+      ```bash
+        php artisan db:seed --class=FinanceSeeder
+      ```
+5. **Crie a chave de criptografia da aplicação:**
    ```bash
-   php artisan migrate --seed
-   php artisan db:seed --class=FinanceSeeder
+   php artisan key:generate
    ```
 
-5. **Inicie o servidor de desenvolvimento:**
+6. **Inicie o servidor de desenvolvimento:**
    ```bash
    composer run dev
    ```
 
-6. **Acesse a aplicação no navegador::** A aplicação estará disponível em http://localhost:8000
+7. **Acesse a aplicação no navegador:** A aplicação estará disponível em http://localhost:8000
 
 ## Contribuição
 
 ### Se você deseja contribuir com melhorias para o projeto, siga estas etapas:
 
-1. Faça um fork deste repositório.
-2. Crie uma nova branch:
+1. **Faça um fork deste repositório.**
+   
+2. **Crie uma nova branch:**
+   
    ```bash
    git checkout -b feature/nova-feature
    ```
-3. Realize as alterações e faça commit delas
+
+3. **Realize as alterações e faça commit delas:**
+
    ```bash
    git commit -m 'Adiciona nova feature'
    ```
-4. Faça push para a branch
+
+4. **Faça push para a branch:**
+   
    ```bash
    git push origin feature/nova-feature
    ```
-5. Abra um pull request descrevendo suas alterações ❤️
+
+5. E por último abra um pull request descrevendo suas alterações ❤️
