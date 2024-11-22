@@ -99,7 +99,6 @@ Este é um sistema de gestão de usuários, controle de acesso, configurações 
    
    1. **Cria os acessos de usuário iniciais:** opcional
 
-      
       ```bash
       php artisan migrate --seed
       ```
@@ -110,16 +109,16 @@ Este é um sistema de gestão de usuários, controle de acesso, configurações 
       - **Login:** admin@admin.com (senha: admin@admin.com)
       - **Login:** user@user.com (senha: user@user.com)
   
-  
      2. **Popula o banco de dados com 10 contas financeiras fictícias utilizando:** opcional
    
-        
       ```bash
         php artisan db:seed --class=FinanceSeeder
       ```
-5. **Crie a chave de criptografia da aplicação:**
+      
+5. **Crie as chaves de criptografia da aplicação:**
    ```bash
    php artisan key:generate
+   php artisan jwt:secret
    ```
 
 6. **Inicie o servidor de desenvolvimento:**
